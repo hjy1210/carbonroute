@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <link rel="import" href="bower_components/polymer/polymer.html">
+    <link rel="import" href="bower_components/carbon-route/carbon-route.html">
+    <link rel="import" href="bower_components/paper-input/paper-input.html">  
+    <link rel="import" href="bower_components/carbon-route/carbon-location.html">  
+    <!--<link rel="import" href="bower_components/tabs-page/tabs-page.html"> --> 
+  </head>
+  <body>
+<demo-1 pattern="/yang HJ" ></demo-1>
+<dom-module id="demo-1">
+    <template>
+  
+      <carbon-route route="{{route}}" pattern="{{pattern}}" active="{{active}}">
+      </carbon-route>
+  
+      <div>Route is <span hidden$="{{active}}">not</span> active.</div>
+      <paper-input label="Route path" value="{{route.path}}"></paper-input>
+      <paper-input label="Match pattern" value="{{pattern}}"></paper-input>
+  
+    </template>
+    <script>
+        Polymer({
+        is: 'demo-1',
+        properties: {
+          pattern: {
+            value: '/store',
+          },
+          route: {
+            value: function() {
+              // Route objects are composed of the `path` that we want to
+              // match on, the `prefix`, which is everything that has already
+              // been matched by someone else before it got to us, and
+              // a queryParams object, which represents the ?key=value part
+              // of the URL.
+              return {path: '/store/garden', prefix: '', queryParams: {}}
+            }
+          }
+        }
+        });
+    </script>
+</dom-module>
+<demo-2></demo-2>
+<dom-module id="demo-2">
+  <template>
+
+    <carbon-location route="{{route}}"></carbon-location>
+    <carbon-route route="{{route}}" pattern="{{pattern}}" active="{{active}}"></carbon-route>
+
+    <div>Route is <span hidden$="{{active}}">not</span> active.</div>
+    <paper-input label="Route path" value="{{route.path}}"></paper-input>
+    <paper-input label="Pattern to match" value="{{pattern}}"></paper-input>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'demo-2',
+      properties: {
+        pattern: {
+          value: function() {
+            var pathname = window.location.pathname;
+            return pathname.substring(0, pathname.lastIndexOf('/'));
+          },
+        },
+      }
+    });
+  </script>
+</dom-module>
+Before
+<demo-3></demo-3>
+After
+<dom-module id="demo-3">
+  <template>
+    <style>
+      :host {
+        display: block;
+        height: 100px;
+      }
+    </style>
+    <carbon-location use-hash-as-path route="{{route}}"></carbon-location>
+
+    <!-- Two routes, one for the home page, and one for the tabs page. -->
+    <carbon-route route="{{route}}" pattern="/tabs" tail="{{tabsRoute}}" active="{{tabsActive}}"></carbon-route>
+    <carbon-route route="{{route}}" pattern="/" active="{{homeActive}}"></carbon-route>
+
+    <div hidden$="{{!homeActive}}">
+      Main page!<br><br>
+      <a href="#/tabs/">Tabs page</a>
+    </div>
+    <div hidden$="{{!tabsActive}}">
+      <a href="#/">Back to main page</a>
+      <!-- tabs-page is an element that handles routing within itself.
+           view-source for more details!
+        -->
+      <tabs-page route="{{tabsRoute}}"></tabs-page>
+    </div>
+  </template>
+  <script>
+    Polymer({
+      is: 'demo-3',
+      ready: function() {
+        this.async(function() {
+          // If the path is blank, redirect to /
+          if (!this.route.path) {
+            this.set('route.path', '/');
+          }
+        });
+      }
+    });
+  </script>
+</dom-module>
+</body>
+</html>

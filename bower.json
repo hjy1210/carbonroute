@@ -1,0 +1,24 @@
+{
+  "name": "carbonroute",
+  "authors": [
+    "hjy1210 <hjyanghj@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "polymer/polymer#^1.4.0",
+    "carbon-route": "^0.8.1",
+    "paper-input": "^1.1.10"
+  }
+}
