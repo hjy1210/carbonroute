@@ -19,6 +19,8 @@
   "dependencies": {
     "polymer": "polymer/polymer#^1.4.0",
     "carbon-route": "^0.8.1",
-    "paper-input": "^1.1.10"
+    "paper-input": "^1.1.10",
+    "paper-tabs": "^1.4.1",
+    "neon-animation": "^1.1.1"
   }
 }
